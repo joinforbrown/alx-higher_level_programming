@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Check if PYFILE environment variable is set
+if [ -z "$PYFILE" ]; then
+  echo "Error: PYFILE environment variable is not set."
+  exit 1
+fi
+
+# Extract the filename and extension
+filename=$(basename -- "$PYFILE")
+extension="${filename##*.}"
+
+# Check if the file has a .py extension
+if [ "$extension" != "py" ]; then
+  echo "Error: Provided file is not a Python script."
+  exit 1
+fi
+
+# Create the output filename
+output_filename="${filename%.*}.pyc"
+
+# Compile the Python script
+echo "Compiling $PYFILE ..."
+python3 -m py_compile "$PYFILE"
+
+# Check if the compilation was successful
+if [ $? -eq 0 ]; then
+  echo "Compilation successful."
+  mv "__pycache__/$filename.cpython-$(python3 -c 'import sys; print(sys.implementation.cache_tag)')" "$output_filename"
+  rm -rf "__pycache__"
+  echo "Output file: $output_filename"
+else
+  echo "Error: Compilation failed."
+fi
+
