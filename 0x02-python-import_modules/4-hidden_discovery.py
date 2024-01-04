@@ -1,19 +1,11 @@
-import marshal
-import types
-
-def print_hidden_names(module_file):
-    with open(module_file, 'rb') as file:
-        code = marshal.load(file)
-
-    module = types.ModuleType("hidden_module")
-    exec(code, module.__dict__)
-
-    names = sorted(name for name in dir(module) if not name.startswith('__'))
-    
-    for name in names:
-        print(name)
+#!/usr/bin/python3
+# 4-hidden_discovery.py
 
 if __name__ == "__main__":
-    module_file = "hidden_4.pyc"
-    print_hidden_names(module_file)
+    """Print all names defined by hidden_4 module."""
+    import hidden_4
 
+    names = dir(hidden_4)
+    for name in names:
+        if name[:2] != "__":
+            print(name)
