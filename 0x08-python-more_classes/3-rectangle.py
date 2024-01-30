@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 class Rectangle:
     def __init__(self, width=0, height=0):
         self.width = width
@@ -24,31 +25,20 @@ class Rectangle:
         self.__height = value
 
     def area(self):
-        return self.__width * self.__height
+        return (self.__width * self.__height)
 
     def perimeter(self):
         if self.__width == 0 or self.__height == 0:
-            return 0
-        return 2 * (self.__width + self.__height)
+            return (0)
+        return ((self.__width * 2) + (self.__height * 2))
 
     def __str__(self):
         if self.__width == 0 or self.__height == 0:
-            return ""
-        return "\n".join(["#" * self.__width] * self.__height)
+            return ("")
 
-    def __repr__(self):
-        return "Rectangle({}, {})".format(self.__width, self.__height)
-
-my_rectangle = Rectangle(2, 4)
-print("Area: {} - Perimeter: {}".format(my_rectangle.area(), my_rectangle.perimeter()))
-
-print(str(my_rectangle))
-print(repr(my_rectangle))
-
-print("--")
-
-my_rectangle.width = 10
-my_rectangle.height = 3
-print(my_rectangle)
-print(repr(my_rectangle))
-
+        rect = []
+        for i in range(self.__height):
+            [rect.append('#') for j in range(self.__width)]
+            if i != self.__height - 1:
+                rect.append("\n")
+        return ("".join(rect))
